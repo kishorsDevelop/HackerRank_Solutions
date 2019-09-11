@@ -1,0 +1,21 @@
+
+// Complete the beautifulDays function below.
+int reverse(int a){
+    int rem=0,reverseNum=0;
+    while(a!=0){
+        rem = a%10;
+        reverseNum = reverseNum*10 + rem;
+        a/=10;
+    }
+    return reverseNum;
+}
+int beautifulDays(int i, int j, int k) {
+   int count = 0;
+   for(int a = i; a <= j; a++){
+         if((a - reverse(a))%k == 0){
+             count++;
+         }
+   }
+return count;
+}
+
