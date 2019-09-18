@@ -1,0 +1,11 @@
+// Complete the jumpingOnClouds function below.
+int jumpingOnClouds(vector<int> c, int k) {
+    int n = c.size();
+    int e = 100;
+     for(int i=0;i<n;i=i+k){
+         
+         if(c[i%n] == 1){ e = e - 3; }else{ e = e - 1;}
+         
+     }
+return e;
+}
