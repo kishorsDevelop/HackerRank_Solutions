@@ -1,0 +1,19 @@
+// Complete the cutTheSticks function below.
+vector<int> cutTheSticks(vector<int> arr) {
+vector<int> ans;
+int n = arr.size();
+int min;
+int count;
+sort(arr.begin(),arr.end());
+for(int i=0;i<n;i++){
+       count = 0;
+       if(arr[i] == 0){continue;}
+       min = arr[i];
+       for(int j=i;j<n;j++){
+           count++;
+           arr[j] = arr[j] - min;
+       }
+        ans.push_back(count);  
+}
+return ans;
+}
