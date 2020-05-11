@@ -1,0 +1,85 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct Trie{
+      bool isLeaf;
+      unordered_map<char,Trie*> mp;
+      int cnt = 0;
+      Trie(){
+          isLeaf = false;
+      }
+};
+void insert(Trie *head,string s){
+    Trie* curr = head;
+    for(char c:s){
+           if(curr->mp.find(c) == curr->mp.end()){
+               curr->mp[c] = new Trie();
+               curr->mp[c]->cnt = 1;
+           }
+           else{
+               curr->mp[c]->cnt += 1;
+           }
+        curr = curr->mp[c];
+    }
+    curr->isLeaf = true;
+}
+int search(Trie *head,string s){
+    Trie* curr = head;
+    for(char c:s){
+           if(!curr->mp.count(c)){
+               return 0;
+           }
+           curr = curr->mp[c];
+    }
+   return curr->cnt;
+}
+vector<int> contacts(vector<vector<string>> queries) {
+  vector<int> ans;
+  Trie* root = new Trie();
+  for(int i=0;i<queries.size();i++){
+         string a = queries[i][0];
+         string b = queries[i][1];
+       
+         if(a == "add"){
+               insert(root,b); 
+         }else{
+                 ans.push_back(search(root,b));        
+         }
+  }
+return ans;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int queries_rows;
+    cin >> queries_rows;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    vector<vector<string>> queries(queries_rows);
+    for (int queries_row_itr = 0; queries_row_itr < queries_rows; queries_row_itr++) {
+        queries[queries_row_itr].resize(2);
+
+        for (int queries_column_itr = 0; queries_column_itr < 2; queries_column_itr++) {
+            cin >> queries[queries_row_itr][queries_column_itr];
+        }
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+
+    vector<int> result = contacts(queries);
+
+    for (int result_itr = 0; result_itr < result.size(); result_itr++) {
+        fout << result[result_itr];
+
+        if (result_itr != result.size() - 1) {
+            fout << "\n";
+        }
+    }
+
+    fout << "\n";
+
+    fout.close();
+
+    return 0;
+}
