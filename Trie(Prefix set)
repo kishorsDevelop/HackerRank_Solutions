@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int MAX=10;
+struct Trie
+{
+  bool endOfS;
+  unordered_map<char,Trie*> mp;
+  Trie(){
+    endOfS = false;
+  }
+};
+int f = 1;
+void insertTrie(struct Trie* root,string s)
+{
+    struct Trie* cur=root;
+    for(char c:s)
+    {
+
+
+        if(!cur->mp.count(c))
+           cur->mp[c]= new Trie();
+        cur=cur->mp[c]; 
+        
+           if(cur->endOfS==true)
+            f=0;
+
+    }
+    cur->endOfS=true;
+    for(int i=0;i<10;i++)
+    {
+        if(cur->mp.count(i+'a'))
+            f=0;
+    }
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    string s;
+    struct Trie* root= new Trie();
+    while(n--)
+    {
+        cin>>s;
+        insertTrie(root,s);
+        if(f == 0)
+           {
+            cout<<"BAD SET"<<endl;
+            cout<<s;
+            break;
+           }
+        
+    }
+    if(f)
+        cout<<"GOOD SET";
+    return 0;
+}
